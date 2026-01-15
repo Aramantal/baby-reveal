@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Small Game</title>
+
+<style>
+body {
+font-family: system-ui, Arial, sans-serif;
+max-width: 600px;
+margin: 40px auto;
+padding: 20px;
+line-height: 1.6;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+input {
+width: 100%;
+padding: 8px;
+margin-top: 8px;
+font-size: 1rem;
+}
+
+button {
+margin-top: 10px;
+padding: 8px 16px;
+font-size: 1rem;
+}
+
+.error { color: #b00020; }
+.hint { color: #555; font-style: italic; }
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro" class="section active">
+<h2>Welcome</h2>
+<p>
+We’ve hidden something important behind a few simple puzzles.
+Solve them to unlock the final message.
+</p>
+<button onclick="nextSection('puzzle1')">Begin</button>
+</div>
+
+<!-- PUZZLE 1 -->
+<div id="puzzle1" class="section">
+<h3>Puzzle 1</h3>
+<p>
+What has a heartbeat but no heart?
+</p>
+
+<input id="puzzle1-input" placeholder="Your answer">
+<button onclick="checkAnswer('puzzle1', 'clock', 'puzzle2')">Submit</button>
+
+<p id="puzzle1-error" class="error"></p>
+
+<p id="puzzle1-hint1" class="hint" style="display:none;">
+A quiet sound you often hear.
+</p>
+<p id="puzzle1-hint2" class="hint" style="display:none;">
+You might find it hanging on a wall.
+</p>
+</div>
+
+<!-- PUZZLE 2 -->
+<div id="puzzle2" class="section">
+<h3>Puzzle 2</h3>
+<p>
+How many letters are in the word <strong>family</strong>?
+</p>
+
+<input id="puzzle2-input" placeholder="Your answer">
+<button onclick="checkAnswer('puzzle2', '6', 'puzzle3')">Submit</button>
+
+<p id="puzzle2-error" class="error"></p>
+
+<p id="puzzle2-hint1" class="hint" style="display:none;">
+Don’t overthink it.
+</p>
+<p id="puzzle2-hint2" class="hint" style="display:none;">
+Just count each character.
+</p>
+</div>
+
+<!-- PUZZLE 3 -->
+<div id="puzzle3" class="section">
+<h3>Final Puzzle</h3>
+<p>
+Think of the color most often linked to the sky and the ocean.
+</p>
+
+<input id="puzzle3-input" placeholder="Your answer">
+<button onclick="checkAnswer('puzzle3', 'blue', 'reveal')">Submit</button>
+
+<p id="puzzle3-error" class="error"></p>
+
+<p id="puzzle3-hint1" class="hint" style="display:none;">
+It’s a calming color.
+</p>
+<p id="puzzle3-hint2" class="hint" style="display:none;">
+It’s not pink.
+</p>
+</div>
+
+<!-- REVEAL -->
+<div id="reveal" class="section">
+<h2>🎉 It’s a Boy 💙</h2>
+<p>
+We can’t wait for you to meet him.
+</p>
+
+<p class="hint">
+Puzzle attempts:<br>
+Puzzle 1: <span id="count1"></span><br>
+Puzzle 2: <span id="count2"></span><br>
+Puzzle 3: <span id="count3"></span>
+</p>
+</div>
+
+<script>
+const attempts = {
+puzzle1: 0,
+puzzle2: 0,
+puzzle3: 0
+};
+
+function nextSection(id) {
+document.querySelector('.section.active').classList.remove('active');
+document.getElementById(id).classList.add('active');
+}
+
+function checkAnswer(puzzleId, correctAnswer, nextId) {
+const input = document.getElementById(puzzleId + '-input');
+const error = document.getElementById(puzzleId + '-error');
+const answer = input.value.trim().toLowerCase();
+
+if (answer === correctAnswer) {
+if (nextId === 'reveal') {
+document.getElementById('count1').innerText = attempts.puzzle1;
+document.getElementById('count2').innerText = attempts.puzzle2;
+document.getElementById('count3').innerText = attempts.puzzle3;
+}
+nextSection(nextId);
+return;
+}
+
+attempts[puzzleId]++;
+error.innerText = "Try again 🙂";
+
+if (attempts[puzzleId] === 2) {
+document.getElementById(puzzleId + '-hint1').style.display = 'block';
+}
+if (attempts[puzzleId] === 4) {
+document.getElementById(puzzleId + '-hint2').style.display = 'block';
+}
+}
+</script>
+
+</body>
+</html>
