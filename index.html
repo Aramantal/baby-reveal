@@ -156,10 +156,10 @@ return;
 attempts[puzzleId]++;
 error.innerText = "Try again 🙂";
 
-if (attempts[puzzleId] === 2) {
+if (attempts[puzzleId] === 3) {
 document.getElementById(puzzleId + '-hint1').style.display = 'block';
 }
-if (attempts[puzzleId] === 4) {
+if (attempts[puzzleId] === 5) {
 document.getElementById(puzzleId + '-hint2').style.display = 'block';
 }
 }
