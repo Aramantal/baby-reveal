@@ -356,14 +356,14 @@
         Solve them, and the forest will share its secret.”</em>
       </p>
 
-      <button onclick="showScreen('puzzle1')">Step Into the First Clearing</button>
+      <button onclick="showScreen('puzzle1')">Step Into the first clearing</button>
     </div>
   </div>
 
   <!-- PUZZLE 1 -->
   <div id="puzzle1" class="screen">
     <div class="content">
-      <p>The forest hushes as you approach a humming wooden door. Glowing letters appear:</p>
+      <p>The forest hushes as you approach an enchanted circle. Glowing letters appear within:</p>
 
       <p><em>
         <strong>B</strong>eneath the branches, a secret grows,<br>
@@ -372,7 +372,7 @@
         <strong>Y</strong>our answer waits within these lines.
       </em></p>
 
-      <p>Type the hidden word:</p>
+      <p>What is the hidden word?</p>
       <input id="p1" class="puzzle-input" placeholder="Your answer...">
       <button onclick="checkPuzzle1()">Submit</button>
 
@@ -391,12 +391,12 @@
       </div>
 
       <div class="two-col">
-        <strong>S O C U D L E</strong>
+        <strong>S D C U D L E</strong>
         <input id="p2b" class="puzzle-input" placeholder="Word 2">
       </div>
 
       <div class="two-col">
-        <strong>T E A R H T B E A</strong>
+        <strong>O L E V</strong>
         <input id="p2c" class="puzzle-input" placeholder="Word 3">
       </div>
 
@@ -470,13 +470,13 @@
       </p>
 
       <button onclick="revealGender()" style="margin-top:30px;">
-        Reveal the Truth
+        Reveal the truth
       </button>
 
       <div id="genderReveal" style="display:none; margin-top:40px;">
         <div class="sparkle-burst" id="sparkleBurst"></div>
         <div class="golden-glow" id="goldenGlow"></div>
-        <h2 style="font-size:2em; color:#e6b3ff; position:relative; z-index:1;"><em>It’s a girl.</em></h2>
+        <h2 style="font-size:2em; color:#e6b3ff; position:relative; z-index:1;"><em>Kit’s a dinosuar.</em></h2>
       </div>
 
     </div>
@@ -508,7 +508,7 @@
     const w2 = document.getElementById('p2b').value.trim().toLowerCase();
     const w3 = document.getElementById('p2c').value.trim().toLowerCase();
 
-    if (w1 === "smiles" && w2 === "cuddles" && w3 === "heartbeat") {
+    if (w1 === "smiles" && w2 === "cuddles" && w3 === "love") {
       document.getElementById('p2msg').textContent = "";
       document.getElementById('p2followSection').style.display = "block";
     } else {
@@ -524,7 +524,7 @@
       showScreen('finalReveal');
     } else {
       document.getElementById('p3msg').textContent =
-        "The kit twitches its nose... the forest does not recognize that name.";
+        "The kit twitches its nose... The forest does not recognize that name.";
     }
   }
 
