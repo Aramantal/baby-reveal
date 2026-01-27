@@ -1,178 +1,569 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Enchanted Forest of Whispers</title>
+
+<!-- FONT IMPORT -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title><Guess who...></title>
-
 <style>
-body {
-  font-family: "Press Start 2P", system-ui;
-  font-weight: 400;
-  font-style: normal;max-width: 600px;
-margin: 40px auto;
-padding: 20px;
-line-height: 1.6;
-  background-color: #000; /* black background */
-  color: #fff;            /* white text */
-}
+  /* GLOBAL */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Press Start 2P", system-ui;
+    background: #020403;
+    color: #d8f5d0;
+    overflow-x: hidden;
+  }
 
-.section { display: none; }
-.section.active { display: block; }
+  /* PARALLAX BACKGROUND LAYERS */
+  .parallax-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 120%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-input {
-width: 100%;
-padding: 8px;
-margin-top: 8px;
-font-size: 1rem;
-  font-family: "Press Start 2P", system-ui;
+  .layer-back {
+    background-image: radial-gradient(circle at top, #0b1c12 0, #020403 60%);
+    transform: translateY(0);
+  }
 
-}
+  .layer-mid {
+    background-image:
+      linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)),
+      url("data:image/svg+xml,%3Csvg width='800' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 300 Q 100 260 200 280 T 400 270 T 600 290 T 800 260 L800 400 L0 400 Z' fill='%230b2615'/%3E%3C/svg%3E");
+    opacity: 0.7;
+  }
 
-button {
-margin-top: 10px;
-padding: 8px 16px;
-font-size: 1rem;
-  font-family: "Press Start 2P", system-ui;
-}
+  .layer-front {
+    background-image:
+      linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2)),
+      url("data:image/svg+xml,%3Csvg width='800' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 320 Q 120 290 240 310 T 480 300 T 720 320 T 800 310 L800 400 L0 400 Z' fill='%23102818'/%3E%3C/svg%3E");
+    opacity: 0.9;
+  }
 
-.error { color: #b00020; }
-.hint { color: #555; font-style: italic; }
+  /* FIREFLIES */
+  .firefly {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #d8f5d0;
+    opacity: 0.8;
+    animation: drift 12s infinite linear;
+    z-index: 1;
+  }
+
+  @keyframes drift {
+    0% { transform: translateY(0) translateX(0); opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-120vh) translateX(20vw); opacity: 0; }
+  }
+
+  /* CRT SCREEN WRAPPER */
+  .crt-frame {
+    margin: 30px auto;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #1a1d1a;
+    box-shadow:
+      0 0 20px rgba(0,255,150,0.2),
+      inset 0 0 10px rgba(0,255,150,0.15);
+    position: relative;
+    z-index: 2;
+  }
+
+  .crt-frame::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.05) 0px,
+      rgba(0,0,0,0.05) 2px,
+      rgba(0,0,0,0) 4px
+    );
+    border-radius: 20px;
+  }
+
+  /* PIXEL BORDER BOXES + FADE */
+  .screen {
+    display: none;
+    padding: 40px 20px;
+    text-align: center;
+    border: 4px solid #7fa87a;
+    border-radius: 12px;
+    background: #2a322a;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+  }
+
+  .visible {
+    display: block;
+    opacity: 1;
+  }
+
+  h1 {
+    font-size: 1.6em;
+    color: #b8ffb0;
+    margin-bottom: 0.6em;
+  }
+
+  .subtitle {
+    font-size: 0.8em;
+    color: #a4dca0;
+  }
+
+  button {
+    margin-top: 2em;
+    padding: 14px 24px;
+    font-size: 0.8em;
+    background-color: #7fa87a;
+    color: #0d0f0d;
+    border: 2px solid #b8ffb0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #6a9467;
+  }
+
+  .content {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 0.8em;
+    line-height: 1.8;
+  }
+
+  .puzzle-input {
+    padding: 12px;
+    font-size: 0.8em;
+    width: 100%;
+    max-width: 260px;
+    background: #1a1d1a;
+    color: #d8f5d0;
+    border: 2px solid #7fa87a;
+    border-radius: 6px;
+  }
+
+  button,
+  .puzzle-input {
+    font-family: "Press Start 2P", system-ui;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  }
+
+  /* NAME LINE IN PUZZLE 3 */
+  .name-line {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    font-size: 1.1em;
+    margin: 20px 0;
+  }
+
+  /* SHIMMER LINE */
+  .shimmer-line {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    margin: 30px 0;
+    font-size: 1.1em;
+  }
+
+  .shimmer {
+    display: inline-block;
+    animation: shimmer 2.2s infinite ease-in-out;
+  }
+
+  .shimmer:nth-child(1) { animation-delay: 0s; }
+  .shimmer:nth-child(2) { animation-delay: 0.4s; }
+  .shimmer:nth-child(3) { animation-delay: 0.8s; }
+
+  @keyframes shimmer {
+    0% { opacity: 0.6; text-shadow: 0 0 2px #d8f5d0; }
+    50% { opacity: 1; text-shadow: 0 0 8px #d8f5d0; }
+    100% { opacity: 0.6; text-shadow: 0 0 2px #d8f5d0; }
+  }
+
+  /* FADE-IN FOR GENDER REVEAL */
+  #genderReveal {
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    position: relative;
+  }
+
+  #genderReveal.visible {
+    opacity: 1;
+  }
+
+  /* SPARKLE BURST */
+  .sparkle-burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    overflow: visible;
+  }
+
+  .spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #f8f0c0 0%, #f8f0c0 40%, rgba(248,240,192,0) 70%);
+    opacity: 0;
+  }
+
+  .spark.square {
+    background: #f8f0c0;
+    box-shadow: 0 0 6px rgba(248,240,192,0.9);
+  }
+
+  @keyframes spark-burst {
+    0% {
+      transform: translate(0, 0) scale(0.6);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--dx), var(--dy)) scale(1);
+      opacity: 0;
+    }
+  }
+
+  /* EXPANDING GOLDEN GLOW */
+  .golden-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(248,240,192,0.9) 0%, rgba(248,240,192,0.3) 40%, rgba(248,240,192,0) 70%);
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes glow-expand {
+    0% {
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0.7;
+    }
+    60% {
+      transform: translate(-50%, -50%) scale(1.4);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.8);
+      opacity: 0.2;
+    }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-<div id="intro" class="section active">
-<h2>Do you want to play a game?</h2>
-  <img
-    src="https://i.kym-cdn.com/entries/icons/original/000/018/272/1389924495986.jpg"
-    alt="Do you want to play a game"
-    style="width:100%; max-width:500px; display:block; margin:20px auto; border:2px solid white;"
-  >
-<p>
-We’ve hidden something important behind a few simple puzzles.
-Solve them to unlock the final message.
-</p>
-<button onclick="nextSection('puzzle1')">Begin</button>
-</div>
+<!-- PARALLAX LAYERS -->
+<div class="parallax-layer layer-back" id="layerBack"></div>
+<div class="parallax-layer layer-mid" id="layerMid"></div>
+<div class="parallax-layer layer-front" id="layerFront"></div>
 
-<!-- PUZZLE 1 -->
-<div id="puzzle1" class="section">
-<h3>Puzzle 1</h3>
-<p>
-What has a heartbeat but no heart?
-</p>
+<!-- FIREFLIES -->
+<script>
+  for (let i = 0; i < 25; i++) {
+    const f = document.createElement("div");
+    f.className = "firefly";
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.top = Math.random() * 100 + "vh";
+    f.style.animationDelay = Math.random() * 10 + "s";
+    f.style.opacity = Math.random();
+    document.body.appendChild(f);
+  }
 
-<input id="puzzle1-input" placeholder="Your answer">
-<button onclick="checkAnswer('puzzle1', 'clock', 'puzzle2')">Submit</button>
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    document.getElementById("layerBack").style.transform =
+      "translateY(" + scrollY * 0.1 + "px)";
+    document.getElementById("layerMid").style.transform =
+      "translateY(" + scrollY * 0.2 + "px)";
+    document.getElementById("layerFront").style.transform =
+      "translateY(" + scrollY * 0.3 + "px)";
+  });
+</script>
 
-<p id="puzzle1-error" class="error"></p>
+<div class="crt-frame">
 
-<p id="puzzle1-hint1" class="hint" style="display:none;">
-A quiet sound you often hear.
-</p>
-<p id="puzzle1-hint2" class="hint" style="display:none;">
-You might find it hanging on a wall.
-</p>
-</div>
+  <!-- TITLE SCREEN -->
+  <div id="titleScreen" class="screen visible">
+    <h1>The Enchanted Forest of Whispers</h1>
+    <p class="subtitle">A retro‑storybook adventure of riddles and wonder.</p>
+    <button onclick="showScreen('introScreen')">Follow the Fireflies</button>
+  </div>
 
-<!-- PUZZLE 2 -->
-<div id="puzzle2" class="section">
-<h3>Puzzle 2</h3>
-<p>
-How many letters are in the word <strong>family</strong>?
-</p>
+  <!-- INTRO SCREEN -->
+  <div id="introScreen" class="screen">
+    <div class="content">
+      <p>
+        You step beneath the arching branches, and the forest welcomes you with a soft glow.<br>
+        Lanterns sway gently from the trees, their light warm and golden.<br>
+        Fireflies drift like tiny pixel stars, guiding you deeper along the mossy path.
+      </p>
 
-<input id="puzzle2-input" placeholder="Your answer">
-<button onclick="checkAnswer('puzzle2', '6', 'puzzle3')">Submit</button>
+      <p>
+        A hush settles over the woods — not silence, but anticipation.<br>
+        As if the forest itself knows why you’ve come.
+      </p>
 
-<p id="puzzle2-error" class="error"></p>
+      <p>
+        A wooden sign appears beside the path:<br><br>
+        <em>“Three puzzles lie ahead.<br>
+        Solve them, and the forest will share its secret.”</em>
+      </p>
 
-<p id="puzzle2-hint1" class="hint" style="display:none;">
-Don’t overthink it.
-</p>
-<p id="puzzle2-hint2" class="hint" style="display:none;">
-Just count each character.
-</p>
-</div>
+      <button onclick="showScreen('puzzle1')">Step Into the First Clearing</button>
+    </div>
+  </div>
 
-<!-- PUZZLE 3 -->
-<div id="puzzle3" class="section">
-<h3>Final Puzzle</h3>
-<p>
-Think of the color most often linked to the sky and the ocean.
-</p>
+  <!-- PUZZLE 1 -->
+  <div id="puzzle1" class="screen">
+    <div class="content">
+      <p>The forest hushes as you approach a humming wooden door. Glowing letters appear:</p>
 
-<input id="puzzle3-input" placeholder="Your answer">
-<button onclick="checkAnswer('puzzle3', 'blue', 'reveal')">Submit</button>
+      <p><em>
+        <strong>B</strong>eneath the branches, a secret grows,<br>
+        <strong>A</strong> small and wondrous spark of life.<br>
+        <strong>B</strong>orn of hope and whispered dreams,<br>
+        <strong>Y</strong>our answer waits within these lines.
+      </em></p>
 
-<p id="puzzle3-error" class="error"></p>
+      <p>Type the hidden word:</p>
+      <input id="p1" class="puzzle-input" placeholder="Your answer...">
+      <button onclick="checkPuzzle1()">Submit</button>
 
-<p id="puzzle3-hint1" class="hint" style="display:none;">
-It’s a calming color.
-</p>
-<p id="puzzle3-hint2" class="hint" style="display:none;">
-It’s not pink.
-</p>
-</div>
+      <p id="p1msg"></p>
+    </div>
+  </div>
 
-<!-- REVEAL -->
-<div id="reveal" class="section">
-<h2>🎉 It’s a Boy 💙</h2>
-<p>
-We can’t wait for you to meet him.
-</p>
+  <!-- PUZZLE 2 -->
+  <div id="puzzle2" class="screen">
+    <div class="content">
+      <p>Fireflies swirl into glowing jumbles:</p>
 
-<p class="hint">
-Puzzle attempts:<br>
-Puzzle 1: <span id="count1"></span><br>
-Puzzle 2: <span id="count2"></span><br>
-Puzzle 3: <span id="count3"></span>
-</p>
-</div>
+      <div class="two-col">
+        <strong>S E L M I S</strong>
+        <input id="p2a" class="puzzle-input" placeholder="Word 1">
+      </div>
+
+      <div class="two-col">
+        <strong>S O C U D L E</strong>
+        <input id="p2b" class="puzzle-input" placeholder="Word 2">
+      </div>
+
+      <div class="two-col">
+        <strong>T E A R H T B E A</strong>
+        <input id="p2c" class="puzzle-input" placeholder="Word 3">
+      </div>
+
+      <button onclick="checkPuzzle2Words()">Check Words</button>
+
+      <p id="p2msg"></p>
+
+      <div id="p2followSection" style="display:none; margin-top:20px; text-align:center;">
+        <p>
+          The fireflies glow brighter and swirl together, forming the outline of a tiny baby rabbit — a <strong>kit</strong>.<br>
+          It blinks up at you, twitches its ears, and hops toward a narrow path deeper into the forest.
+        </p>
+        <button onclick="showScreen('puzzle3')">Follow the Kit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUZZLE 3 -->
+  <div id="puzzle3" class="screen">
+    <div class="content">
+      <p>
+        You follow the tiny kit along a winding path until it stops beneath a towering tree.<br>
+        Two great roots stretch outward, each carved with a name:
+      </p>
+
+      <div class="name-line">
+        <span><strong>CARLSON</strong></span>
+        <span><strong>SANDERS</strong></span>
+      </div>
+
+      <p>
+        The kit settles itself gently between the two roots,<br>
+        as if it belongs to both families at once.
+      </p>
+
+      <p>Fireflies drift upward as a soft poem appears in the air:</p>
+
+      <p style="margin-left:20px; font-style:italic;">
+        “Where two old roots entwine below,<br>
+        A tender future starts to grow.<br>
+        The kit belongs to both its kin,<br>
+        A name that blends the two within.”
+      </p>
+
+      <p>Type the name the forest whispers:</p>
+
+      <input id="p3" class="puzzle-input" placeholder="Your answer...">
+      <button onclick="checkPuzzle3()">Submit</button>
+
+      <p id="p3msg"></p>
+    </div>
+  </div>
+
+  <!-- FINAL REVEAL -->
+  <div id="finalReveal" class="screen">
+    <div class="content" style="text-align:center; position:relative;">
+
+      <p>
+        The fireflies rise all around you, brighter than anywhere else in the forest.<br>
+        Their glow gathers into three shimmering words:
+      </p>
+
+      <div class="shimmer-line">
+        <span class="shimmer">BABY</span>
+        <span class="shimmer">KIT</span>
+        <span class="shimmer">CARLDERS</span>
+      </div>
+
+      <p style="margin-top:30px;">
+        The path you followed, the clues you solved — they were all leading here.
+      </p>
+
+      <button onclick="revealGender()" style="margin-top:30px;">
+        Reveal the Truth
+      </button>
+
+      <div id="genderReveal" style="display:none; margin-top:40px;">
+        <div class="sparkle-burst" id="sparkleBurst"></div>
+        <div class="golden-glow" id="goldenGlow"></div>
+        <h2 style="font-size:2em; color:#e6b3ff; position:relative; z-index:1;"><em>It’s a girl.</em></h2>
+      </div>
+
+    </div>
+  </div>
+
+</div> <!-- END CRT FRAME -->
 
 <script>
-const attempts = {
-puzzle1: 1,
-puzzle2: 1,
-puzzle3: 1
-};
+  function showScreen(id) {
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(s => {
+      s.classList.remove('visible');
+    });
+    const next = document.getElementById(id);
+    next.classList.add('visible');
+  }
 
-function nextSection(id) {
-document.querySelector('.section.active').classList.remove('active');
-document.getElementById(id).classList.add('active');
-}
+  function checkPuzzle1() {
+    const val = document.getElementById('p1').value.trim().toLowerCase();
+    if (val === "baby") {
+      showScreen('puzzle2');
+    } else {
+      document.getElementById('p1msg').textContent = "The forest whispers: try again.";
+    }
+  }
 
-function checkAnswer(puzzleId, correctAnswer, nextId) {
-const input = document.getElementById(puzzleId + '-input');
-const error = document.getElementById(puzzleId + '-error');
-const answer = input.value.trim().toLowerCase();
+  function checkPuzzle2Words() {
+    const w1 = document.getElementById('p2a').value.trim().toLowerCase();
+    const w2 = document.getElementById('p2b').value.trim().toLowerCase();
+    const w3 = document.getElementById('p2c').value.trim().toLowerCase();
 
-if (answer === correctAnswer) {
-if (nextId === 'reveal') {
-document.getElementById('count1').innerText = attempts.puzzle1;
-document.getElementById('count2').innerText = attempts.puzzle2;
-document.getElementById('count3').innerText = attempts.puzzle3;
-}
-nextSection(nextId);
-return;
-}
+    if (w1 === "smiles" && w2 === "cuddles" && w3 === "heartbeat") {
+      document.getElementById('p2msg').textContent = "";
+      document.getElementById('p2followSection').style.display = "block";
+    } else {
+      document.getElementById('p2msg').textContent =
+        "The fireflies flicker uncertainly... those words aren’t quite right.";
+      document.getElementById('p2followSection').style.display = "none";
+    }
+  }
 
-attempts[puzzleId]++;
-error.innerText = "Try again 🙂";
+  function checkPuzzle3() {
+    const val = document.getElementById('p3').value.trim().toLowerCase();
+    if (val === "carlders") {
+      showScreen('finalReveal');
+    } else {
+      document.getElementById('p3msg').textContent =
+        "The kit twitches its nose... the forest does not recognize that name.";
+    }
+  }
 
-if (attempts[puzzleId] === 3) {
-document.getElementById(puzzleId + '-hint1').style.display = 'block';
-}
-if (attempts[puzzleId] === 5) {
-document.getElementById(puzzleId + '-hint2').style.display = 'block';
-}
-}
+  function revealGender() {
+    const el = document.getElementById('genderReveal');
+    const burst = document.getElementById('sparkleBurst');
+    const glow = document.getElementById('goldenGlow');
+
+    el.style.display = 'block';
+    setTimeout(() => el.classList.add('visible'), 10);
+
+    // Clear previous sparks if any
+    burst.innerHTML = "";
+
+    const sparkCount = 12;
+    for (let i = 0; i < sparkCount; i++) {
+      const s = document.createElement('div');
+      s.className = 'spark';
+
+      // Half dots, half squares
+      if (i % 2 === 0) {
+        s.classList.add('square');
+      }
+
+      const angle = (Math.PI * 2 * i) / sparkCount + (Math.random() * 0.5 - 0.25);
+      const distance = 40 + Math.random() * 40;
+      const dx = Math.cos(angle) * distance;
+      const dy = Math.sin(angle) * distance;
+
+      s.style.setProperty('--dx', dx + 'px');
+      s.style.setProperty('--dy', dy + 'px');
+      s.style.animation = 'spark-burst 1.2s ease-out forwards';
+
+      burst.appendChild(s);
+    }
+
+    // Trigger golden glow expand
+    glow.style.animation = 'glow-expand 1.5s ease-out forwards';
+  }
 </script>
 
 </body>
