@@ -332,8 +332,8 @@
   <!-- TITLE SCREEN -->
   <div id="titleScreen" class="screen visible">
     <h1>The Enchanted Forest of Whispers</h1>
-    <p class="subtitle">A retro‑storybook adventure of riddles and wonder.</p>
-    <button onclick="showScreen('introScreen')">Follow the Fireflies</button>
+    <p class="subtitle">A storybook adventure of riddles and wonder.</p>
+    <button onclick="showScreen('introScreen')">Follow the fireflies</button>
   </div>
 
   <!-- INTRO SCREEN -->
@@ -342,7 +342,7 @@
       <p>
         You step beneath the arching branches, and the forest welcomes you with a soft glow.<br>
         Lanterns sway gently from the trees, their light warm and golden.<br>
-        Fireflies drift like tiny pixel stars, guiding you deeper along the mossy path.
+        Fireflies drift like tiny stars, guiding you deeper along the mossy path.
       </p>
 
       <p>
@@ -351,19 +351,19 @@
       </p>
 
       <p>
-        A wooden sign appears beside the path:<br><br>
+        You notice a wooden sign beside the path:<br><br>
         <em>“Three puzzles lie ahead.<br>
-        Solve them, and the forest will share its secret.”</em>
+        Solve them all, and the forest will share its secret.”</em>
       </p>
 
-      <button onclick="showScreen('puzzle1')">Step Into the first clearing</button>
+      <button onclick="showScreen('puzzle1')">Step into the first clearing</button>
     </div>
   </div>
 
   <!-- PUZZLE 1 -->
   <div id="puzzle1" class="screen">
     <div class="content">
-      <p>The forest hushes as you approach an enchanted circle. Glowing letters appear within:</p>
+      <p>Silence falls as you approach an enchanted circle. Glowing letters appear within:</p>
 
       <p><em>
         <strong>B</strong>eneath the branches, a secret grows,<br>
@@ -372,7 +372,7 @@
         <strong>Y</strong>our answer waits within these lines.
       </em></p>
 
-      <p>What is the hidden word?</p>
+      <p>Give the answer to complete the enchantment:</p>
       <input id="p1" class="puzzle-input" placeholder="Your answer...">
       <button onclick="checkPuzzle1()">Submit</button>
 
@@ -383,7 +383,7 @@
   <!-- PUZZLE 2 -->
   <div id="puzzle2" class="screen">
     <div class="content">
-      <p>Fireflies swirl into glowing jumbles:</p>
+      <p>Fireflies rise from the glow and swirl into jumbles in front of you:</p>
 
       <div class="two-col">
         <strong>S E L M I S</strong>
@@ -406,8 +406,8 @@
 
       <div id="p2followSection" style="display:none; margin-top:20px; text-align:center;">
         <p>
-          The fireflies glow brighter and swirl together, forming the outline of a tiny baby rabbit — a <strong>kit</strong>.<br>
-          It blinks up at you, twitches its ears, and hops toward a narrow path deeper into the forest.
+          The fireflies glow brighter and swirl together, forming the outline of a tiny baby bunny — a <strong>kit</strong>.<br>
+          It blinks up at you, twitches its ears, and hops down a narrow path deeper into the forest.
         </p>
         <button onclick="showScreen('puzzle3')">Follow the Kit</button>
       </div>
@@ -417,31 +417,47 @@
   <!-- PUZZLE 3 -->
   <div id="puzzle3" class="screen">
     <div class="content">
-      <p>
-        You follow the tiny kit along a winding path until it stops beneath a towering tree.<br>
-        Two great roots stretch outward, each carved with a name:
-      </p>
+     <p>
+  You follow the tiny kit along a winding path until it stops beneath a towering tree.<br>
+  Two great roots stretch outward, each carved with a name:
+</p>
 
-      <div class="name-line">
-        <span><strong>CARLSON</strong></span>
-        <span><strong>SANDERS</strong></span>
-      </div>
+<div class="name-line">
+  <span><strong>CARLSON</strong></span>
+  <span><strong>SANDERS</strong></span>
+</div>
 
-      <p>
-        The kit settles itself gently between the two roots,<br>
-        as if it belongs to both families at once.
-      </p>
+<p>
+  The kit settles itself gently between them,<br>
+  as if it belongs to both families at once.
+</p>
 
-      <p>Fireflies drift upward as a soft poem appears in the air:</p>
+<p>
+  The silence breaks in the forest.<br>
+  At first it sounds like wind rustling through the leaves...<br>
+  But then you hear it — soft, layered, ancient.
+</p>
 
-      <p style="margin-left:20px; font-style:italic;">
-        “Where two old roots entwine below,<br>
-        A tender future starts to grow.<br>
-        The kit belongs to both its kin,<br>
-        A name that blends the two within.”
-      </p>
+<p>
+  The forest is whispering:
+</p>
 
-      <p>Type the name the forest whispers:</p>
+<p style="margin-left:20px; font-style:italic;">
+  “Where two old roots entwine below,<br>
+  A tender future starts to grow.<br>
+  The kit belongs to both its kin,<br>
+  A name that blends the two within.”
+</p>
+
+<p>
+  The whispers fade...<br>
+  And then the forest begins to chant.<br>
+  Not loud. Not clear. Just a rhythmic pulse eminating from the trees —<br>
+  a single name, repeated again and again...
+</p>
+
+      
+      <p>What is the name the forest chants?</p>
 
       <input id="p3" class="puzzle-input" placeholder="Your answer...">
       <button onclick="checkPuzzle3()">Submit</button>
@@ -499,7 +515,7 @@
     if (val === "baby") {
       showScreen('puzzle2');
     } else {
-      document.getElementById('p1msg').textContent = "The forest whispers: try again.";
+      document.getElementById('p1msg').textContent = "The forest whispers: Try again...";
     }
   }
 
@@ -513,7 +529,7 @@
       document.getElementById('p2followSection').style.display = "block";
     } else {
       document.getElementById('p2msg').textContent =
-        "The fireflies flicker uncertainly... those words aren’t quite right.";
+        "The fireflies flicker uncertainly... Those words aren’t quite right.";
       document.getElementById('p2followSection').style.display = "none";
     }
   }
