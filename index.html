@@ -407,45 +407,50 @@
     </div>
   </div>
 
-  <!-- PUZZLE 2 -->
-  <div id="puzzle2" class="screen">
-    <div class="content">
-<p>
-  The enchanted circle dims, releasing a soft breath of light into the air.<br>
-  The forest exhales in response, and fireflies spill from the undergrowth.<br>
-  They spiral around you, weaving glowing patterns that break apart into tangled letters —<br>
-  fragments of familiar words waiting to be set right:
-</p>
-      
-      <div class="two-col">
-        <strong>S E L M I S</strong>
-        <input id="p2a" class="puzzle-input" placeholder="Word 1">
-      </div>
+ <!-- PUZZLE 2A -->
+<div id="puzzle2a" class="screen">
+  <div class="content">
+    <p>
+      The enchanted circle dims, releasing a soft breath of light into the air.<br>
+      The forest exhales in response, and fireflies spill from the undergrowth.<br>
+      They spiral around you, weaving glowing patterns that break apart into tangled letters —<br>
+      fragments of familiar words waiting to be set right:
+    </p>
 
-      <div class="two-col">
-        <strong>S D C U D L E</strong>
-        <input id="p2b" class="puzzle-input" placeholder="Word 2">
-      </div>
-
-      <div class="two-col">
-        <strong>O L E V</strong>
-        <input id="p2c" class="puzzle-input" placeholder="Word 3">
-      </div>
-
-      <button onclick="checkPuzzle2Words()">Restore the words</button>
-
-      <p id="p2msg"></p>
-
-      <div id="p2followSection" style="display:none; margin-top:20px; text-align:center;">
-      <p>
-        The fireflies flare with sudden purpose, swirling into the shape of a tiny baby bunny — a <strong>kit</strong>.<br>
-        It meets your gaze for a heartbeat, gives a quick twitch of its ears, then turns and hops down a shadowed path as if beckoning you to follow.
-      </p>
-
-        <button onclick="showScreen('puzzle3')">Follow the Kit</button>
-      </div>
+    <div class="two-col">
+      <strong>S E L M I S</strong>
+      <input id="p2a" class="puzzle-input" placeholder="Word 1">
     </div>
+
+    <div class="two-col">
+      <strong>S D C U D L E</strong>
+      <input id="p2b" class="puzzle-input" placeholder="Word 2">
+    </div>
+
+    <div class="two-col">
+      <strong>O L E V</strong>
+      <input id="p2c" class="puzzle-input" placeholder="Word 3">
+    </div>
+
+    <button onclick="checkPuzzle2Words()">Restore the words</button>
+
+    <p id="p2msg"></p>
   </div>
+</div>
+
+  <!-- PUZZLE 2B -->
+<div id="puzzle2b" class="screen">
+  <div class="content" style="text-align:center;">
+    <p>
+      The fireflies flare with sudden purpose, swirling into the shape of a tiny baby bunny — 
+      a <strong>kit</strong>.<br>
+      It meets your gaze for a heartbeat, gives a quick twitch of its ears, 
+      then turns and hops down a shadowed path as if beckoning you to follow.
+    </p>
+
+    <button onclick="showScreen('puzzle3')">Follow the Kit</button>
+  </div>
+</div>
 
   <!-- PUZZLE 3 -->
   <div id="puzzle3" class="screen">
@@ -568,26 +573,25 @@
   function checkPuzzle1() {
     const val = document.getElementById('p1').value.trim().toLowerCase();
     if (val === "baby") {
-      showScreen('puzzle2');
+      showScreen('puzzle2a');
     } else {
       document.getElementById('p1msg').textContent = "The letters flicker, then settle again… the circle is still waiting.";
     }
   }
 
-  function checkPuzzle2Words() {
-    const w1 = document.getElementById('p2a').value.trim().toLowerCase();
-    const w2 = document.getElementById('p2b').value.trim().toLowerCase();
-    const w3 = document.getElementById('p2c').value.trim().toLowerCase();
+function checkPuzzle2Words() {
+  const w1 = document.getElementById('p2a').value.trim().toLowerCase();
+  const w2 = document.getElementById('p2b').value.trim().toLowerCase();
+  const w3 = document.getElementById('p2c').value.trim().toLowerCase();
 
-    if (w1 === "smiles" && w2 === "cuddles" && w3 === "love") {
-      document.getElementById('p2msg').textContent = "";
-      document.getElementById('p2followSection').style.display = "block";
-    } else {
-      document.getElementById('p2msg').textContent =
-        "The glowing fragments tremble apart… the fireflies know the words aren’t right.";
-      document.getElementById('p2followSection').style.display = "none";
-    }
+  if (w1 === "smiles" && w2 === "cuddles" && w3 === "love") {
+    document.getElementById('p2msg').textContent = "";
+    showScreen('puzzle2b'); // move to the new page
+  } else {
+    document.getElementById('p2msg').textContent =
+      "The glowing fragments tremble apart… the fireflies know the words aren’t right.";
   }
+}
 
   function checkPuzzle3() {
     const val = document.getElementById('p3').value.trim().toLowerCase();
