@@ -593,8 +593,11 @@
     screens.forEach(s => {
       s.classList.remove('visible');
     });
+  
     const next = document.getElementById(id);
     next.classList.add('visible');
+  
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function checkPuzzle1() {
