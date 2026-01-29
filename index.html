@@ -109,7 +109,13 @@
     background: #2a322a;
     box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
     opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    transition: opacity 1.2s ease-in-out;
+    pointer-events: none;
+  }
+
+  .screen.visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .visible {
@@ -339,11 +345,11 @@
   <!-- INTRO SCREEN -->
   <div id="introScreen" class="screen">
     <div class="content">
-      <p>
-        You step beneath the arching branches, and the forest welcomes you with a soft glow.<br>
-        Lanterns sway gently from the trees, their light warm and golden.<br>
-        Fireflies drift like tiny stars, guiding you deeper along the mossy path.
-      </p>
+<p>
+  You step beneath the arching branches, and the forest greets you with a soft, living glow.<br>
+  Lanterns sway gently from the trees, their warm light flickering like captured dawn.<br>
+  Fireflies drift like wandering stars, guiding you deeper along the moss‑soft path.
+</p>
 
       <p>
         A hush settles over the woods — not silence, but anticipation.<br>
@@ -363,18 +369,20 @@
   <!-- PUZZLE 1 -->
   <div id="puzzle1" class="screen">
     <div class="content">
-      <p>Silence falls as you approach an enchanted circle. Glowing letters appear within:</p>
+      <p>Silence falls as you approach an enchanted circle. 
+        A faint breeze curls around your ankles, though the air remains still. 
+        A soft radiance gathers in the circle, shaping itself into glowing letters:</p>
 
-      <p><em>
-        <strong>B</strong>eneath the branches, a secret grows,<br>
-        <strong>A</strong> small and wondrous spark of life.<br>
-        <strong>B</strong>orn of hope and whispered dreams,<br>
-        <strong>Y</strong>our answer waits within these lines.
-      </em></p>
+      <p>
+        <strong>B</strong><em>eneath the branches, a secret grows, </em><br>
+        <strong>A</strong><em> small and wondrous spark of life.</em><br>
+        <strong>B</strong><em>orn of hope and whispered dreams,</em><br>
+        <strong>Y</strong><em>our voice must give the secret life.</em>
+     </p>
 
-      <p>Give the answer to complete the enchantment:</p>
-      <input id="p1" class="puzzle-input" placeholder="Your answer...">
-      <button onclick="checkPuzzle1()">Submit</button>
+      <p>Let the hidden word pass your lips, and the magic will stir:</p>
+      <input id="p1" class="puzzle-input" placeholder="Whisper the hidden word...">
+      <button onclick="checkPuzzle1()">Awaken the magic</button>
 
       <p id="p1msg"></p>
     </div>
@@ -383,8 +391,13 @@
   <!-- PUZZLE 2 -->
   <div id="puzzle2" class="screen">
     <div class="content">
-      <p>Fireflies rise from the glow and swirl into jumbles in front of you:</p>
-
+<p>
+  The enchanted circle dims, releasing a soft breath of light into the air.<br>
+  The forest exhales in response, and fireflies spill from the undergrowth.<br>
+  They spiral around you, weaving glowing patterns that break apart into tangled letters —<br>
+  fragments of familiar words waiting to be set right:
+</p>
+      
       <div class="two-col">
         <strong>S E L M I S</strong>
         <input id="p2a" class="puzzle-input" placeholder="Word 1">
@@ -400,15 +413,16 @@
         <input id="p2c" class="puzzle-input" placeholder="Word 3">
       </div>
 
-      <button onclick="checkPuzzle2Words()">Check Words</button>
+      <button onclick="checkPuzzle2Words()">Restore the words</button>
 
       <p id="p2msg"></p>
 
       <div id="p2followSection" style="display:none; margin-top:20px; text-align:center;">
-        <p>
-          The fireflies glow brighter and swirl together, forming the outline of a tiny baby bunny — a <strong>kit</strong>.<br>
-          It blinks up at you, twitches its ears, and hops down a narrow path deeper into the forest.
-        </p>
+      <p>
+        The fireflies flare with sudden purpose, swirling into the shape of a tiny baby bunny — a <strong>kit</strong>.<br>
+        It meets your gaze for a heartbeat, gives a quick twitch of its ears, then turns and hops down a shadowed path as if beckoning you to follow.
+      </p>
+
         <button onclick="showScreen('puzzle3')">Follow the Kit</button>
       </div>
     </div>
@@ -417,8 +431,8 @@
   <!-- PUZZLE 3 -->
   <div id="puzzle3" class="screen">
     <div class="content">
-     <p>
-  You follow the tiny kit along a winding path until it stops beneath a towering tree.<br>
+<p>
+  You follow the tiny kit along the shadowed path until it stops beneath a towering tree.<br>
   Two great roots stretch outward, each carved with a name:
 </p>
 
@@ -433,9 +447,9 @@
 </p>
 
 <p>
-  The silence breaks in the forest.<br>
+  The silence shifts in the forest.<br>
   At first it sounds like wind rustling through the leaves...<br>
-  But then you hear it — soft, layered, ancient.
+  but then you hear it — soft, layered, ancient.
 </p>
 
 <p>
@@ -451,16 +465,16 @@
 
 <p>
   The whispers fade...<br>
-  And then the forest begins to chant.<br>
-  Not loud. Not clear. Just a rhythmic pulse eminating from the trees —<br>
+  only to be replaced by a chant.<br>
+  Not loud. Not clear. Just a rhythmic pulse emanating from the trees —<br>
   a single name, repeated again and again...
 </p>
 
-      
-      <p>What is the name the forest chants?</p>
+<p>Speak the name that grows from both their roots:</p>
 
-      <input id="p3" class="puzzle-input" placeholder="Your answer...">
-      <button onclick="checkPuzzle3()">Submit</button>
+
+      <input id="p3" class="puzzle-input" placeholder="Speak the name">
+      <button onclick="checkPuzzle3()">Complete the forest's chant</button>
 
       <p id="p3msg"></p>
     </div>
@@ -470,10 +484,10 @@
   <div id="finalReveal" class="screen">
     <div class="content" style="text-align:center; position:relative;">
 
-      <p>
-        The fireflies rise all around you, brighter than anywhere else in the forest.<br>
-        Their glow gathers into three shimmering words:
-      </p>
+<p>
+  The fireflies surge upward in a brilliant spiral, their light pooling in the air above you.<br>
+  Slowly, the glow condenses into three shimmering words:
+</p>
 
       <div class="shimmer-line">
         <span class="shimmer">BABY</span>
@@ -481,9 +495,11 @@
         <span class="shimmer">CARLDERS</span>
       </div>
 
-      <p style="margin-top:30px;">
-        The path you followed, the clues you solved — they were all leading here.
-      </p>
+<p style="margin-top:30px;">
+  Every step you took, every whisper you followed — all of it has led to this moment.<br>
+  The forest holds its breath, waiting for you to see what it has revealed.
+</p>
+
 
       <button onclick="revealGender()" style="margin-top:30px;">
         Reveal the truth
@@ -492,7 +508,7 @@
       <div id="genderReveal" style="display:none; margin-top:40px;">
         <div class="sparkle-burst" id="sparkleBurst"></div>
         <div class="golden-glow" id="goldenGlow"></div>
-        <h2 style="font-size:2em; color:#e6b3ff; position:relative; z-index:1;"><em>Kit’s a dinosuar.</em></h2>
+        <h2 style="font-size:2em; color:#e6b3ff; position:relative; z-index:1;"><em>Kit’s a dinosaur.</em></h2>
       </div>
 
     </div>
@@ -515,7 +531,7 @@
     if (val === "baby") {
       showScreen('puzzle2');
     } else {
-      document.getElementById('p1msg').textContent = "The forest whispers: Try again...";
+      document.getElementById('p1msg').textContent = "The letters flicker, then settle again… the circle is still waiting.";
     }
   }
 
@@ -529,7 +545,7 @@
       document.getElementById('p2followSection').style.display = "block";
     } else {
       document.getElementById('p2msg').textContent =
-        "The fireflies flicker uncertainly... Those words aren’t quite right.";
+        "The glowing fragments tremble apart… the fireflies know the words aren’t right.";
       document.getElementById('p2followSection').style.display = "none";
     }
   }
@@ -540,7 +556,7 @@
       showScreen('finalReveal');
     } else {
       document.getElementById('p3msg').textContent =
-        "The kit twitches its nose... The forest does not recognize that name.";
+        "The kit tilts its head, puzzled. The roots stay silent — that is not the name they share.";
     }
   }
 
