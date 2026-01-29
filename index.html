@@ -202,7 +202,7 @@
   .shimmer-line {
     display: flex;
     justify-content: center;
-    gap: 70px;
+    gap: 50px;
     margin: 30px 0;
     font-size: 1.1em;
   }
@@ -235,11 +235,6 @@
 
   /* SPARKLE BURST */
   .sparkle-burst {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
     pointer-events: none;
     transform: translate(-50%, -50%);
     overflow: visible;
@@ -300,6 +295,29 @@
       opacity: 0.2;
     }
   }
+  
+  .reveal-wrapper {
+  position: relative;
+  display: inline-block; /* keeps the wrapper sized to the text */
+}
+
+.reveal-text {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  position: relative;
+  z-index: 2;
+}
+
+
+#sparkleBurst,
+#goldenGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centers behind the text */
+  z-index: 1; /* behind text, above background */
+  pointer-events: none;
+}
 </style>
 </head>
 
@@ -338,7 +356,8 @@
   <!-- TITLE SCREEN -->
   <div id="titleScreen" class="screen visible">
     <h1>The Enchanted Forest of Whispers</h1>
-    <p class="subtitle">A storybook adventure of riddles and wonder.</p>
+    <p class="subtitle">A tale of fireflies, whispers, and a secret waiting to be revealed.
+</p>
     <button onclick="showScreen('introScreen')">Follow the fireflies</button>
   </div>
 
@@ -501,18 +520,38 @@
 </p>
 
 
-      <button onclick="revealGender()" style="margin-top:30px;">
-        Reveal the truth
-      </button>
-
-      <div id="genderReveal" style="display:none; margin-top:40px;">
-        <div class="sparkle-burst" id="sparkleBurst"></div>
-        <div class="golden-glow" id="goldenGlow"></div>
-        <h2 style="font-size:2em; color:#e6b3ff; position:relative; z-index:1;"><em>Kit’s a dinosaur.</em></h2>
-      </div>
+<button onclick="goToGenderPage()" style="margin-top:30px;">
+  Reveal the truth
+</button>
 
     </div>
   </div>
+  
+  
+  <!-- GENDER REVEAL PAGE -->
+<div id="genderPage" class="screen">
+  <div class="content" style="text-align:center; position:relative;">
+    <div class="reveal-wrapper">
+        <div class="sparkle-burst" id="sparkleBurst"></div>
+        <div class="golden-glow" id="goldenGlow"></div>
+            <h2 class="reveal-text" id="revealText" style="font-size:2em; color:#e6b3ff;">
+                <em>Kit’s a dinosaur.</em>
+            </h2> 
+    </div>
+    
+<p id="epilogue" style="
+  margin-top:40px;
+  visibility:hidden;
+  opacity:0;
+  transition: opacity 1.5s ease;
+">
+  The fireflies drift back into the trees, their glow settling into a peaceful hush.<br>
+  The forest seems to smile around you — its secret shared at last.<br>
+  And somewhere among the roots and leaves, a tiny kit lets out a proud little chirp.
+</p>
+
+  </div>
+</div>
 
 </div> <!-- END CRT FRAME -->
 
@@ -559,43 +598,53 @@
         "The kit tilts its head, puzzled. The roots stay silent — that is not the name they share.";
     }
   }
+  
+  function goToGenderPage() {
+  showScreen('genderPage');
+  triggerGenderEffects();
+}
 
-  function revealGender() {
-    const el = document.getElementById('genderReveal');
-    const burst = document.getElementById('sparkleBurst');
-    const glow = document.getElementById('goldenGlow');
+function triggerGenderEffects() {
+  const burst = document.getElementById('sparkleBurst');
+  const glow = document.getElementById('goldenGlow');
 
-    el.style.display = 'block';
-    setTimeout(() => el.classList.add('visible'), 10);
+  // Clear previous sparks
+  burst.innerHTML = "";
 
-    // Clear previous sparks if any
-    burst.innerHTML = "";
+  const sparkCount = 12;
+  for (let i = 0; i < sparkCount; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
 
-    const sparkCount = 12;
-    for (let i = 0; i < sparkCount; i++) {
-      const s = document.createElement('div');
-      s.className = 'spark';
-
-      // Half dots, half squares
-      if (i % 2 === 0) {
-        s.classList.add('square');
-      }
-
-      const angle = (Math.PI * 2 * i) / sparkCount + (Math.random() * 0.5 - 0.25);
-      const distance = 40 + Math.random() * 40;
-      const dx = Math.cos(angle) * distance;
-      const dy = Math.sin(angle) * distance;
-
-      s.style.setProperty('--dx', dx + 'px');
-      s.style.setProperty('--dy', dy + 'px');
-      s.style.animation = 'spark-burst 1.2s ease-out forwards';
-
-      burst.appendChild(s);
+    if (i % 2 === 0) {
+      s.classList.add('square');
     }
 
-    // Trigger golden glow expand
-    glow.style.animation = 'glow-expand 1.5s ease-out forwards';
+    const angle = (Math.PI * 2 * i) / sparkCount + (Math.random() * 0.5 - 0.25);
+    const distance = 40 + Math.random() * 40;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance;
+
+    s.style.setProperty('--dx', dx + 'px');
+    s.style.setProperty('--dy', dy + 'px');
+    s.style.animation = 'spark-burst 3.6s ease-out forwards';
+
+    burst.appendChild(s);
   }
+  
+  glow.style.animation = 'glow-expand 3.8s ease-out forwards';
+
+setTimeout(() => {
+  const text = document.getElementById('revealText');
+  text.style.opacity = 1;
+}, 100); 
+
+setTimeout(() => {
+  const ep = document.getElementById('epilogue');
+  ep.style.visibility = 'visible';
+  ep.style.opacity = 1;
+}, 4000);
+}
 </script>
 
 </body>
