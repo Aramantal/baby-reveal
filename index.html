@@ -524,6 +524,17 @@
   The forest holds its breath, waiting for you to see what it has revealed.
 </p>
 
+<img 
+  src="https://raw.githubusercontent.com/Aramantal/baby-reveal/main/rev1.jpeg"
+  alt="Reveal photo 1"
+  style="
+    width:400px;
+    max-width:100%;
+    border-radius:12px;
+    margin:20px auto;
+    display:block;
+  "
+>
 
 <button onclick="goToGenderPage()" style="margin-top:30px;">
   Reveal the truth
@@ -537,12 +548,28 @@
 <div id="genderPage" class="screen">
   <div class="content" style="text-align:center; position:relative;">
     <div class="reveal-wrapper">
-        <div class="sparkle-burst" id="sparkleBurst"></div>
-        <div class="golden-glow" id="goldenGlow"></div>
-            <h2 class="reveal-text" id="revealText" style="font-size:2em; color:#e6b3ff;">
-                <em>Kit’s a dinosaur.</em>
-            </h2> 
+      <div class="sparkle-burst" id="sparkleBurst"></div>
+      <div class="golden-glow" id="goldenGlow"></div>
+    
+      <h2 class="reveal-text" id="revealText" style="font-size:2em; color:#f00aab;">
+        <em>Kit’s a girl!</em>
+      </h2>
     </div>
+
+    <img 
+      id="revealPhoto"
+      src="https://raw.githubusercontent.com/Aramantal/baby-reveal/main/rev3.jpeg"
+      alt="Reveal photo"
+      style="
+        width:400px;
+        max-width:100%;
+        border-radius:12px;
+        margin:20px auto 0;
+        display:block;
+        opacity:0;
+        transition: opacity 1.2s ease;
+      "
+    >
     
 <p id="epilogue" style="
   margin-top:40px;
@@ -640,7 +667,10 @@ function triggerGenderEffects() {
 
 setTimeout(() => {
   const text = document.getElementById('revealText');
+  const photo = document.getElementById('revealPhoto');
+
   text.style.opacity = 1;
+  photo.style.opacity = 1;
 }, 100); 
 
 setTimeout(() => {
